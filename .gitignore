@@ -1,10 +1,55 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
-/.env.local.php
+/.env.local
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
-/vendor/
+!/var/assets/
 ###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/.env.test.local
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> composer/composer ###
+/vendor/
+###< composer/composer ###
+
+###> public/ assets ###
+/public/build/
+/public/storage/
+###< public/ assets ###
+
+###> development tools ###
+.phpcs-cache
+.phpunit.result.cache
+/pake.json
+/phpmd.xml
+/phpstan.neon.dist
+/psalm.xml
+/.php-cs-fixer.cache
+/.php-cs-fixer.dist.php
+###< development tools ###
+
+###> IDEs and OS ###
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+###< IDEs and OS ###
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+###< friendsofphp/php-cs-fixer ###
+config/reference.php
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
