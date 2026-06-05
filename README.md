@@ -14,13 +14,13 @@ The container entrypoint runs database migrations automatically before the app b
 
 ```bash
 # Import into the database
-docker compose exec app php bin/console app:import-products
+docker compose exec app php bin/console app:import-products-from-file
 
 # Dry run — processes everything but does not write to the database
-docker compose exec app php bin/console app:import-products --test
+docker compose exec app php bin/console app:import-products-from-file --test
 
 # Custom file path
-docker compose exec app php bin/console app:import-products path/to/file.csv
+docker compose exec app php bin/console app:import-products-from-file path/to/file.csv
 ```
 
 **Tear down:**
