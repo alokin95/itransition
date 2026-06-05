@@ -1,0 +1,11 @@
+parameters:
+    level: 9
+    phpVersion: 80400
+    paths:
+        - src
+
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+
+    doctrine:
+        objectManagerLoader: tests/doctrine_object_manager.php
