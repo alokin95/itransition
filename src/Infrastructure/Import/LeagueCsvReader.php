@@ -27,8 +27,12 @@ final class LeagueCsvReader implements ProductReader
     {
         $csv = Reader::from($path, 'r');
         $csv->setHeaderOffset(0);
+        // PHP 8.4 deprecated the default backslash escape character. RFC 4180
+        // does not define an escape character so an empty string is correct here.
         $csv->setEscape('');
 
+        // Supplier files may use the legacy Latin 1 encoding. Converting to UTF8
+        // before processing prevents character corruption in utf8mb4 columns.
         CharsetConverter::addTo($csv, 'ISO-8859-1', 'UTF-8');
 
         $this->assertRequiredColumnsPresent($csv->getHeader());

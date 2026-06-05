@@ -6,6 +6,11 @@ namespace App\Domain\ValueObject;
 
 use InvalidArgumentException;
 
+/**
+ * Amounts are stored as integer minor units to avoid floating point rounding
+ * errors when multiplying or comparing prices. For example 9.99 GBP is stored
+ * as 999 so all arithmetic stays in integer space.
+ */
 readonly class Money
 {
     private function __construct(
@@ -21,6 +26,11 @@ readonly class Money
         }
     }
 
+    /**
+     * Negative values indicate malformed or tampered supplier data and are
+     * rejected before non numeric characters are stripped. Stripping first
+     * would silently turn a negative into a positive.
+     */
     /**
      * Negative values indicate malformed or tampered supplier data and are
      * rejected before non numeric characters are stripped. Stripping first

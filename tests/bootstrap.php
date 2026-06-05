@@ -4,6 +4,9 @@ use Symfony\Component\Dotenv\Dotenv;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
+// Force the test environment before Dotenv loads. Without this the Docker
+// APP_ENV=dev bleeds into the test kernel and framework.test is never enabled,
+// causing KernelTestCase to fail looking for test.service_container.
 $_ENV['APP_ENV'] = $_SERVER['APP_ENV'] = 'test';
 putenv('APP_ENV=test');
 

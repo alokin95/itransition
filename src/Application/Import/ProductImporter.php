@@ -16,7 +16,10 @@ use Psr\Clock\ClockInterface;
 
 readonly class ProductImporter
 {
-    /** @param iterable<SkipSpecification> $specifications */
+    /**
+     * @param iterable<SkipSpecification> $specifications injected via a DI tagged iterator;
+     *                                                    each implementation encapsulates one skip rule
+     */
     public function __construct(
         private ProductReader $reader,
         private ProductRepositoryInterface $repository,
@@ -51,6 +54,8 @@ readonly class ProductImporter
                 continue;
             }
 
+            // Registered before the skip check so a second occurrence of a code
+            // whose first row was skipped is still detected as a duplicate.
             $processedProductCodes[$row->code] = true;
 
             if ($this->shouldBeSkipped($product, $row->code, $result)) {
@@ -64,6 +69,8 @@ readonly class ProductImporter
             $result->recordSuccess();
         }
 
+        // Single flush after all rows so the database round trip count is
+        // proportional to successful imports rather than to total rows processed.
         if (!$testMode && $result->getSuccessful() > 0) {
             $this->flusher->flush();
         }
