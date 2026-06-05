@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env.local
+.env.*.local
+var/
+vendor/
+.phpunit.cache/
+.php-cs-fixer.cache
+docker/mysql/

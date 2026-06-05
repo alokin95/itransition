@@ -1,0 +1,32 @@
+services:
+  database:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: importTest
+      MYSQL_USER: app
+      MYSQL_PASSWORD: "!ChangeMe!"
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - database_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  app:
+    build: .
+    environment:
+      APP_ENV: dev
+      APP_SECRET: "changeme-in-production"
+      DATABASE_URL: "mysql://app:!ChangeMe!@database:3306/importTest?serverVersion=8.0.32&charset=utf8mb4"
+    volumes:
+      - ./storage:/app/storage:ro
+    depends_on:
+      database:
+        condition: service_healthy
+
+volumes:
+  database_data:
